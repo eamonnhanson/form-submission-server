@@ -1,14 +1,17 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const axios = require('axios');
+const cors = require('cors');
 const app = express();
 
+app.use(cors()); // Enable CORS for all routes
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.post('/submit', async (req, res) => {
     try {
-        // Perform any server-side validation or processing here
+        console.log('Received data:', req.body);
+
         const data = req.body;
 
         // Send data to Zoho webhook
@@ -19,8 +22,11 @@ app.post('/submit', async (req, res) => {
             }
         });
 
+        console.log('Zoho response:', response.data);
+
         res.status(200).send('Form submission successful');
     } catch (error) {
+        console.error('Error submitting form:', error);
         res.status(500).send('Error submitting form');
     }
 });
