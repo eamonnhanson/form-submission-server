@@ -1,37 +1,27 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const axios = require('axios');
-const cors = require('cors');
+const bodyParser = require('body-parser');
+
 const app = express();
+const port = process.env.PORT || 3000;
 
-app.use(cors()); // Enable CORS for all routes
-app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(express.static('public'));
 
-app.post('/submit', async (req, res) => {
+app.post('/submit-form', async (req, res) => {
+    const formData = req.body;
+
     try {
-        console.log('Received data:', req.body);
+        // Send data to Zoho Creator via Zoho Flow Webhook
+        await axios.post('https://flow.zoho.eu/20071889412/flow/webhook/incoming?zapikey=1001.135d0547db270fb2604b6772f9c30ac1.e1c3971a221b2993f3d850b4b348471a&isdebug=false', formData);
 
-        const data = req.body;
-
-        // Send data to Zoho webhook
-        const response = await axios.post('https://flow.zoho.eu/20071889412/flow/webhook/incoming', data, {
-            params: {
-                zapikey: '1001.135d0547db270fb2604b6772f9c30ac1.e1c3971a221b2993f3d850b4b348471a',
-                isdebug: 'false'
-            }
-        });
-
-        console.log('Zoho response:', response.data);
-
-        res.status(200).send('Form submission successful');
+        res.json({ message: 'Form submitted successfully' });
     } catch (error) {
-        console.error('Error submitting form:', error);
-        res.status(500).send('Error submitting form');
+        console.error('Error submitting form:', error.response ? error.response.data : error.message);
+        res.status(500).json({ error: 'Error submitting form' });
     }
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+app.listen(port, () => {
+    console.log(`Server running at http://localhost:${port}`);
 });
