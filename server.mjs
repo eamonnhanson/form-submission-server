@@ -1,6 +1,5 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import fetch from 'node-fetch';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -15,6 +14,8 @@ app.post('/submit-form', async (req, res) => {
 
     // Valideer de email en "Teller" waarde met Zoho CRM
     try {
+        const fetch = (await import('node-fetch')).default;
+
         const response = await fetch('https://zoho-calls-e0dc91dd8cf4.herokuapp.com/fetch-achternaam', {
             method: 'POST',
             headers: {
