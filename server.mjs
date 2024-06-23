@@ -22,7 +22,7 @@ app.post('/submit-form', async (req, res) => {
             },
             body: JSON.stringify({ email: formData['contact[email]'] })
         });
-
+        
         const data = await response.json();
         console.log('Data received from Zoho CRM:', data);
 
