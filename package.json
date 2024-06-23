@@ -3,6 +3,7 @@
     "version": "1.0.0",
     "description": "gets from information and send its to Zoho Creator via webhook",
     "main": "server.js",
+    "type": "module",  // Voeg deze regel toe
     "scripts": {
         "start": "node server.js"
     },
