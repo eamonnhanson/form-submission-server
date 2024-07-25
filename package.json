@@ -1,6 +1,7 @@
 {
-    "name": "wpmmobiliteit",
+    "name": "form-submission-server",
     "version": "1.0.0",
+    "description": "Server for handling form submissions",
     "main": "server.mjs",
     "type": "module",
     "scripts": {
