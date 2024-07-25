@@ -27,7 +27,6 @@ app.post('/submit-form', async (req, res) => {
     const formData = req.body;
     console.log('Form data received:', formData);
 
-    // Valideer de email en "Teller" waarde met Zoho CRM
     try {
         const response = await fetch('https://zoho-calls-e0dc91dd8cf4.herokuapp.com/fetch-achternaam', {
             method: 'POST',
@@ -43,14 +42,12 @@ app.post('/submit-form', async (req, res) => {
         if (data.data && data.data.length > 0) {
             const userRecord = data.data[0];
             if (userRecord.Teller < 6) {
-                // Verzamel de benodigde velden om naar Zoho Creator te sturen via webhook
                 const payload = {
                     Voornaam: userRecord.Voornaam,
                     Achternaam: userRecord.Achternaam,
                     Email: userRecord.Email,
                     Teller: userRecord.Teller,
                     Bedrijf: userRecord.Bedrijf,
-                    // Voeg formuliergegevens hier toe
                     vehicle_zondag: formData.vehicle_zondag,
                     fuel_zondag: formData.fuel_zondag,
                     kilometers_zondag: formData.kilometers_zondag,
@@ -74,7 +71,6 @@ app.post('/submit-form', async (req, res) => {
                     kilometers_zaterdag: formData.kilometers_zaterdag
                 };
 
-                // Verzend gegevens naar Zoho Creator via webhook
                 const zohoResponse = await fetch('https://flow.zoho.eu/20071889412/flow/webhook/incoming?zapikey=1001.135d0547db270fb2604b6772f9c30ac1.e1c3971a221b2993f3d850b4b348471a&isdebug=false', {
                     method: 'POST',
                     headers: {
