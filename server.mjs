@@ -50,18 +50,42 @@ app.post('/submit-form', async (req, res) => {
                     Email: userRecord.Email,
                     Teller: userRecord.Teller,
                     Bedrijf: userRecord.Bedrijf,
-                    // Voeg andere formuliergegevens hier toe
-                    userInputs: formData
+                    // Voeg formuliergegevens hier toe
+                    vehicle_zondag: formData.vehicle_zondag,
+                    fuel_zondag: formData.fuel_zondag,
+                    kilometers_zondag: formData.kilometers_zondag,
+                    vehicle_maandag: formData.vehicle_maandag,
+                    fuel_maandag: formData.fuel_maandag,
+                    kilometers_maandag: formData.kilometers_maandag,
+                    vehicle_dinsdag: formData.vehicle_dinsdag,
+                    fuel_dinsdag: formData.fuel_dinsdag,
+                    kilometers_dinsdag: formData.kilometers_dinsdag,
+                    vehicle_woensdag: formData.vehicle_woensdag,
+                    fuel_woensdag: formData.fuel_woensdag,
+                    kilometers_woensdag: formData.kilometers_woensdag,
+                    vehicle_donderdag: formData.vehicle_donderdag,
+                    fuel_donderdag: formData.fuel_donderdag,
+                    kilometers_donderdag: formData.kilometers_donderdag,
+                    vehicle_vrijdag: formData.vehicle_vrijdag,
+                    fuel_vrijdag: formData.fuel_vrijdag,
+                    kilometers_vrijdag: formData.kilometers_vrijdag,
+                    vehicle_zaterdag: formData.vehicle_zaterdag,
+                    fuel_zaterdag: formData.fuel_zaterdag,
+                    kilometers_zaterdag: formData.kilometers_zaterdag
                 };
 
                 // Verzend gegevens naar Zoho Creator via webhook
-                await fetch('https://flow.zoho.eu/20071889412/flow/webhook/incoming?zapikey=1001.135d0547db270fb2604b6772f9c30ac1.e1c3971a221b2993f3d850b4b348471a&isdebug=false', {
+                const zohoResponse = await fetch('https://flow.zoho.eu/20071889412/flow/webhook/incoming?zapikey=1001.135d0547db270fb2604b6772f9c30ac1.e1c3971a221b2993f3d850b4b348471a&isdebug=false', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify(payload)
                 });
+
+                if (!zohoResponse.ok) {
+                    throw new Error('Error sending data to Zoho Creator: ' + zohoResponse.statusText);
+                }
 
                 res.json({ message: 'Formulier succesvol verzonden', data: payload });
             } else {
