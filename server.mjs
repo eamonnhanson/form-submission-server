@@ -94,6 +94,12 @@ app.post('/proxy-zoho-flow', async (req, res) => {
             throw new Error('Error sending data to Zoho Creator: ' + response.statusText);
         }
 
+        // Set CORS headers for the proxy response
+        res.setHeader('Access-Control-Allow-Origin', 'https://www.planteenboom.nu');
+        res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE');
+        res.setHeader('Access-Control-Allow-Credentials', 'true');
+        res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
         res.json(data);
     } catch (error) {
         console.error('Error sending data to Zoho Creator:', error);
