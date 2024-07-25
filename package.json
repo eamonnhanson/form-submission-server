@@ -1,16 +1,16 @@
 {
-    "name": "form-submission-server",
-    "version": "1.0.0",
-    "description": "Server for handling form submissions",
-    "main": "server.mjs",
-    "type": "module",
-    "scripts": {
-        "start": "node server.mjs"
-    },
-    "dependencies": {
-        "body-parser": "^1.19.0",
-        "cors": "^2.8.5",
-        "express": "^4.17.1",
-        "node-fetch": "^3.3.2"
-    }
+  "name": "form-submission-server",
+  "version": "1.0.0",
+  "description": "Form submission server",
+  "main": "server.mjs",
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "body-parser": "^1.19.0",
+    "axios": "^0.21.1"
+  }
 }
